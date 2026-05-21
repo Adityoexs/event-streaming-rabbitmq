@@ -1,0 +1,355 @@
+/* ─── Reset & Variables ──────────────────────────────────────────────────── */
+:root {
+  --bg: #0f0f23;
+  --surface: #1a1a3e;
+  --surface2: #252550;
+  --accent: #6c63ff;
+  --accent2: #ff6584;
+  --success: #48c774;
+  --error: #ff3860;
+  --warning: #ffdd57;
+  --info: #3298dc;
+  --text: #e0e0ff;
+  --text-muted: #9090bb;
+  --radius: 8px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --transition: 0.2s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─── Layout ─────────────────────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  background: var(--surface);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.app-main {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  flex: 1;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ─── Connection Badge ───────────────────────────────────────────────────── */
+.connection-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  transition: var(--transition);
+}
+
+.connection-badge.connected {
+  background: rgba(72, 199, 116, 0.2);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.connection-badge.disconnected {
+  background: rgba(255, 56, 96, 0.2);
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
+/* ─── Cards ──────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+/* ─── Forms ──────────────────────────────────────────────────────────────── */
+.task-form,
+.event-form {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.task-input {
+  flex: 1;
+  min-width: 140px;
+  background: var(--surface2);
+  border: 1px solid rgba(108, 99, 255, 0.3);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.9rem;
+  padding: 0.5rem 0.8rem;
+  transition: border-color var(--transition);
+  outline: none;
+}
+
+.task-input:focus {
+  border-color: var(--accent);
+}
+
+.task-input::placeholder {
+  color: var(--text-muted);
+}
+
+.task-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
+.btn {
+  padding: 0.5rem 1.1rem;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition);
+  white-space: nowrap;
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--accent2);
+  color: #fff;
+}
+
+/* ─── Task List ──────────────────────────────────────────────────────────── */
+.tasks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.task-item {
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 0.7rem 1rem;
+  border-left: 4px solid var(--text-muted);
+  transition: border-color var(--transition);
+}
+
+.task-item.status-queued    { border-left-color: var(--info); }
+.task-item.status-processing { border-left-color: var(--warning); }
+.task-item.status-completed  { border-left-color: var(--success); }
+.task-item.status-failed     { border-left-color: var(--error); }
+
+.task-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.task-id {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.task-status-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+}
+
+.status-queued    .task-status-badge,
+.task-status-badge.status-queued    { background: rgba(50,152,220,0.25); color: var(--info); }
+.status-processing .task-status-badge,
+.task-status-badge.status-processing { background: rgba(255,221,87,0.25); color: var(--warning); }
+.status-completed .task-status-badge,
+.task-status-badge.status-completed  { background: rgba(72,199,116,0.25); color: var(--success); }
+.status-failed    .task-status-badge,
+.task-status-badge.status-failed     { background: rgba(255,56,96,0.25); color: var(--error); }
+
+.task-data {
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
+.task-result {
+  font-size: 0.82rem;
+  color: var(--success);
+  margin-top: 0.25rem;
+}
+
+.task-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ─── Event Feed ─────────────────────────────────────────────────────────── */
+.event-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 420px;
+  overflow-y: auto;
+  margin-top: 0.75rem;
+}
+
+.event-item {
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.8rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.event-type {
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.event-data {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ─── Notifications ──────────────────────────────────────────────────────── */
+.notification-center {
+  position: fixed;
+  top: 70px;
+  right: 1rem;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 320px;
+}
+
+.notification {
+  border-radius: var(--radius);
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  animation: slideIn 0.25s ease;
+  box-shadow: var(--shadow);
+}
+
+@keyframes slideIn {
+  from { transform: translateX(30px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.notification-success  { background: rgba(72,199,116,0.2); border: 1px solid var(--success); color: var(--success); }
+.notification-error    { background: rgba(255,56,96,0.2);  border: 1px solid var(--error);   color: var(--error); }
+.notification-info     { background: rgba(50,152,220,0.2); border: 1px solid var(--info);    color: var(--info); }
+.notification-warning  { background: rgba(255,221,87,0.2); border: 1px solid var(--warning); color: var(--warning); }
+
+.notif-icon { font-size: 1rem; flex-shrink: 0; }
+.notif-message { flex: 1; }
+
+/* ─── Empty State ────────────────────────────────────────────────────────── */
+.empty-state {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .app-main {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .notification-center {
+    width: calc(100vw - 2rem);
+    right: 1rem;
+  }
+}
